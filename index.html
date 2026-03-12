@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>هل تحبيني يا روح ندى؟ 💖</title>
+  <title>Do You Love Me? 💖</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <style>
     * {
@@ -23,7 +23,7 @@
       position: relative;
     }
 
-    /* Floating hearts background */
+    /* Floating hearts */
     .hearts {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -46,6 +46,73 @@
       z-index: 10;
       padding: 20px;
       max-width: 95%;
+    }
+
+    .name {
+      font-size: 3.8rem;
+      margin-bottom: 1rem;
+      color: #fff;
+      text-shadow: 
+        0 0 10px #ff6b81,
+        0 0 20px #ff4757,
+        0 0 30px #ff4757,
+        0 0 50px #ff6b81;
+      animation: 
+        glowPulse 2.5s ease-in-out infinite alternate,
+        heartbeat 3s ease-in-out infinite;
+      display: inline-block;
+      transition: all 1.5s ease;
+    }
+
+    .name.love {
+      color: #ffe066;
+      text-shadow: 
+        0 0 15px #ffd700,
+        0 0 30px #ffcc00,
+        0 0 50px #ffaa00,
+        0 0 80px #ff8800;
+      animation: 
+        glowPulseLove 2.8s ease-in-out infinite alternate,
+        heartbeat 2.2s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      from {
+        text-shadow: 
+          0 0 10px #ff6b81,
+          0 0 20px #ff4757,
+          0 0 30px #ff4757,
+          0 0 50px #ff6b81;
+      }
+      to {
+        text-shadow: 
+          0 0 20px #ff9a9e,
+          0 0 40px #ff6b81,
+          0 0 60px #ff4757,
+          0 0 100px #ff3366;
+      }
+    }
+
+    @keyframes glowPulseLove {
+      from {
+        text-shadow: 
+          0 0 15px #ffd700,
+          0 0 30px #ffcc00,
+          0 0 50px #ffaa00,
+          0 0 80px #ff8800;
+      }
+      to {
+        text-shadow: 
+          0 0 25px #ffff99,
+          0 0 50px #ffeb3b,
+          0 0 80px #ffc107,
+          0 0 120px #ff9800;
+      }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.08); }
     }
 
     h1 {
@@ -109,6 +176,8 @@
 
     .celebration h2 {
       animation: bounce 1.6s infinite;
+      text-align: center;
+      max-width: 90%;
     }
     @keyframes bounce {
       0%,100% { transform: translateY(0); }
@@ -127,17 +196,18 @@
   <div class="hearts" id="heartsContainer"></div>
 
   <div class="container">
-    <h1 id="question">روح ندى، هل تحبيني؟ 💕</h1>
+    <div class="name" id="specialName">روح ندى</div>
+    <h1 id="question">Do you love me? 💕</h1>
 
     <div class="buttons">
-      <button id="yesBtn">أيوه طبعاً!! 💖</button>
-      <button id="noBtn">لا 😭</button>
+      <button id="yesBtn">YES!! 💖</button>
+      <button id="noBtn">No 😭</button>
     </div>
   </div>
 
   <div class="celebration" id="celebration">
-    <h2>ياييي! أنا كمان بحبك يا روح ندى! 🥰💘</h2>
-    <p>قلبي فرحان أوي دلوقتي بسببك يا أجمل روح ندى في الدنيا! 🌸✨</p>
+    <h2>YAYYYY! I LOVE YOU TOO MY KOHINOR! 💖💎</h2>
+    <p>My heart is exploding with happiness because of you!</p>
   </div>
 
   <script>
@@ -155,19 +225,22 @@
     }
     setInterval(createHeart, 350);
 
-    // No button funny logic
+    // Name change on YES
+    const specialName = document.getElementById("specialName");
+
+    // No button logic
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const question = document.getElementById("question");
     const messages = [
-      "لا 😭",
-      "بجد؟ 🥺",
-      "فكري تاني يا روح ندى! 💔",
-      "بليز بليز بليز 🙏",
-      "بتكسري قلبي... 😢",
-      "آخر فرصة... 😤",
-      "ماشي... بس الأيوه أحلى بكتير! 😏",
-      "مش هتقدري تهربي من الحب يا روح ندى! 💘"
+      "No 😭",
+      "Really? 🥺",
+      "Think again! 💔",
+      "Please please please 🙏",
+      "You're breaking my heart... 😢",
+      "Last chance... 😤",
+      "Okay fine... but YES is better! 😏",
+      "You can't escape love! 💘"
     ];
     let clickCount = 0;
 
@@ -186,18 +259,20 @@
       if (clickCount < messages.length) {
         noBtn.textContent = messages[clickCount];
       } else {
-        noBtn.textContent = "خلاص... بس الأيوه أحلى يا روح ندى 😘";
+        noBtn.textContent = "Okay you win... but YES is cuter 😘";
         noBtn.style.transform = "scale(0.55)";
       }
       
-      // Make Yes bigger & more tempting
       yesBtn.style.transform = `scale(${1 + clickCount * 0.18})`;
       yesBtn.style.padding = `${1.2 + clickCount * 0.25}rem ${3.5 + clickCount * 0.5}rem`;
-      question.textContent = "تعالي يا روح ندى... أنتِ عارفة إنك بتحبيني 😍";
+      question.textContent = "Come on... you know you do! 😍";
     });
 
-    // Yes → big celebration + heart confetti
+    // Yes celebration + name change
     yesBtn.addEventListener("click", () => {
+      specialName.textContent = "I love you to my Kohinor";
+      specialName.classList.add("love");
+
       document.getElementById("celebration").style.display = "flex";
       
       const duration = 6000;
@@ -210,7 +285,7 @@
           spread: 70,
           origin: { x: 0 },
           shapes: ["heart"],
-          colors: ["#ff4757", "#ff6b81", "#ffb8c6", "#ff9a9e"]
+          colors: ["#ff4757", "#ff6b81", "#ffb8c6", "#ff9a9e", "#ffd700", "#ffff99"]
         });
         confetti({
           particleCount: 10,
@@ -218,7 +293,7 @@
           spread: 70,
           origin: { x: 1 },
           shapes: ["heart"],
-          colors: ["#ff4757", "#ff6b81", "#ffb8c6", "#ff9a9e"]
+          colors: ["#ff4757", "#ff6b81", "#ffb8c6", "#ff9a9e", "#ffd700", "#ffff99"]
         });
 
         if (Date.now() < end) {
