@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>هل تحبيني يا روح ندى؟ 💖</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* Floating hearts background */
+    .hearts {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .heart {
+      position: absolute;
+      font-size: 2rem;
+      animation: float 12s linear infinite;
+      opacity: 0.7;
+    }
+    @keyframes float {
+      0%   { transform: translateY(100vh) rotate(0deg); }
+      100% { transform: translateY(-15vh) rotate(720deg); }
+    }
+
+    .container {
+      text-align: center;
+      z-index: 10;
+      padding: 20px;
+      max-width: 95%;
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 0 20px rgba(255,105,180,0.9);
+      animation: pulse 2.8s infinite ease-in-out;
+    }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50%     { transform: scale(1.1); }
+    }
+
+    .buttons {
+      margin: 2.5rem 0;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      font-size: 1.9rem;
+      padding: 1.2rem 3.5rem;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    }
+
+    #yesBtn {
+      background: #ff4757;
+      color: white;
+    }
+    #yesBtn:hover {
+      background: #ff6b81;
+      transform: scale(1.18);
+      box-shadow: 0 12px 35px rgba(255,71,87,0.6);
+    }
+
+    #noBtn {
+      background: #57606f;
+      color: white;
+      position: relative;
+    }
+
+    .celebration {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      color: white;
+      font-size: 3.8rem;
+      text-shadow: 0 0 30px #ff4757;
+    }
+
+    .celebration h2 {
+      animation: bounce 1.6s infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-25px); }
+    }
+
+    p {
+      font-size: 1.8rem;
+      margin-top: 1.5rem;
+      opacity: 0.95;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hearts" id="heartsContainer"></div>
+
+  <div class="container">
+    <h1 id="question">روح ندى، هل تحبيني؟ 💕</h1>
+
+    <div class="buttons">
+      <button id="yesBtn">أيوه طبعاً!! 💖</button>
+      <button id="noBtn">لا 😭</button>
+    </div>
+  </div>
+
+  <div class="celebration" id="celebration">
+    <h2>ياييي! أنا كمان بحبك يا روح ندى! 🥰💘</h2>
+    <p>قلبي فرحان أوي دلوقتي بسببك يا أجمل روح ندى في الدنيا! 🌸✨</p>
+  </div>
+
+  <script>
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = ["💖","❤️","💗","💞","🫶","🌸","💕"][Math.floor(Math.random()*7)];
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (7 + Math.random() * 12) + "s";
+      heart.style.opacity = 0.6 + Math.random() * 0.4;
+      document.getElementById("heartsContainer").appendChild(heart);
+      
+      setTimeout(() => heart.remove(), 18000);
+    }
+    setInterval(createHeart, 350);
+
+    // No button funny logic
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const question = document.getElementById("question");
+    const messages = [
+      "لا 😭",
+      "بجد؟ 🥺",
+      "فكري تاني يا روح ندى! 💔",
+      "بليز بليز بليز 🙏",
+      "بتكسري قلبي... 😢",
+      "آخر فرصة... 😤",
+      "ماشي... بس الأيوه أحلى بكتير! 😏",
+      "مش هتقدري تهربي من الحب يا روح ندى! 💘"
+    ];
+    let clickCount = 0;
+
+    noBtn.addEventListener("mouseover", (e) => {
+      if (clickCount < 6) {
+        const x = Math.random() * (window.innerWidth - 220) + 40;
+        const y = Math.random() * (window.innerHeight - 220) + 40;
+        noBtn.style.position = "absolute";
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+      }
+    });
+
+    noBtn.addEventListener("click", () => {
+      clickCount++;
+      if (clickCount < messages.length) {
+        noBtn.textContent = messages[clickCount];
+      } else {
+        noBtn.textContent = "خلاص... بس الأيوه أحلى يا روح ندى 😘";
+        noBtn.style.transform = "scale(0.55)";
+      }
+      
+      // Make Yes bigger & more tempting
+      yesBtn.style.transform = `scale(${1 + clickCount * 0.18})`;
+      yesBtn.style.padding = `${1.2 + clickCount * 0.25}rem ${3.5 + clickCount * 0.5}rem`;
+      question.textContent = "تعالي يا روح ندى... أنتِ عارفة إنك بتحبيني 😍";
+    });
+
+    // Yes → big celebration + heart confetti
+    yesBtn.addEventListener("click", () => {
+      document.getElementById("celebration").style.display = "flex";
+      
+      const duration = 6000;
+      const end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 10,
+          angle: 60,
+          spread: 70,
+          origin: { x: 0 },
+          shapes: ["heart"],
+          colors: ["#ff4757", "#ff6b81", "#ffb8c6", "#ff9a9e"]
+        });
+        confetti({
+          particleCount: 10,
+          angle: 120,
+          spread: 70,
+          origin: { x: 1 },
+          shapes: ["heart"],
+          colors: ["#ff4757", "#ff6b81", "#ffb8c6", "#ff9a9e"]
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+    });
+  </script>
+</body>
+</html>
